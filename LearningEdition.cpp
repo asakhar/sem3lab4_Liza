@@ -48,7 +48,7 @@ std::string LearningEdition::getGroupsAsString() const
 {
   std::stringstream ss;
   for (auto i = 0ul; i < getNumberOfGroups(); i++)
-    ss << m_groupsIndexes[i] << (i == getNumberOfGroups()) ? "" : ", ";
+    ss << m_groupsIndexes[i] << ((i == getNumberOfGroups() - 1) ? "" : ", ");
   return ss.str();
 }
 long& LearningEdition::operator[](size_t index) noexcept

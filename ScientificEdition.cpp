@@ -42,7 +42,7 @@ std::string ScientificEdition::getCourceTitlesAsString() const
 {
   std::stringstream ss;
   for (auto i = 0ul; i < getNumberOfCources(); i++)
-    ss << m_courceTitles[i] << (i == getNumberOfCources()) ? "" : ", ";
+    ss << m_courceTitles[i] << ((i == getNumberOfCources() - 1) ? "" : ", ");
   return ss.str();
 }
 std::string& ScientificEdition::operator[](size_t index) noexcept
