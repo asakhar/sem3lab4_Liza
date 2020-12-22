@@ -10,6 +10,11 @@ std::ostream& operator<<(std::ostream& stream, EditionType type)
   return stream << _typestrings[type];
 }
 
+BookEdition::BookEdition()
+    : m_year{0}, m_numberOfCopies{0}, m_editionType{Undefined}
+{
+}
+
 BookEdition::BookEdition(std::string const& author, std::string const& title,
                          long year, std::string const& publisher,
                          size_t numberOfCopies, EditionType editionType)

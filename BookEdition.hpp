@@ -22,6 +22,7 @@ protected:
   EditionType m_editionType;
 
 public:
+  BookEdition();
   BookEdition(std::string const& author, std::string const& title, long year,
               std::string const& publisher, size_t numberOfCopies,
               EditionType editionType = Undefined);

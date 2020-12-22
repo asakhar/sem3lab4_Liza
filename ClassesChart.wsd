@@ -68,7 +68,7 @@ BookEdition <|-- FictionEdition
 
 class Table {
   m_editions : std::map<long, BookEdition*>
-  operator+=(long cifer, BookEdition*)
+  operator<<(std::pair<long cifer, BookEdition*>)
   operator[](long cifer)
   erase(long cifer)
   operator<<(ostream, Table)
