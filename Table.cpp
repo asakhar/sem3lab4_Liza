@@ -7,6 +7,10 @@ Table::TableItem::TableItem(long acode, BookEdition* abook)
 {
 }
 
+Table::TableItem::~TableItem() {
+  delete next;
+}
+
 Table::Table() : m_beforeFirst{new Table::TableItem}, m_numberOfEditions{0} {}
 Table::Table(std::vector<KeyVal_t> books) : m_numberOfEditions{0}
 {
@@ -19,6 +23,10 @@ Table::Table(std::vector<KeyVal_t> books) : m_numberOfEditions{0}
     prev       = prev->next;
     m_numberOfEditions++;
   }
+}
+
+Table::~Table() {
+  delete m_beforeFirst;
 }
 
 Table& Table::operator<<(KeyVal_t const& keyval)
