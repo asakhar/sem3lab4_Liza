@@ -1,4 +1,5 @@
 #include "ScientificEdition.hpp"
+#include <iomanip>
 #include <sstream>
 
 ScientificEdition::ScientificEdition(
@@ -79,4 +80,11 @@ ScientificEdition& ScientificEdition::operator<<(std::string const& cource)
         "Tried to insert one more cource when already had 3.");
   m_courceTitles[m_numberOfCources++] = cource;
   return *this;
+}
+
+std::string ScientificEdition::getAllInfo() const
+{
+  std::stringstream ss;
+  ss << *this << std::setw(15) << getCourceTitlesAsString() << ';';
+  return ss.str();
 }

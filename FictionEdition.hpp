@@ -14,7 +14,8 @@ public:
                                  std::string const& publisher,
                                  size_t numberOfCopies,
                                  std::string const& subject);
-  std::string const& getSubject();
+  std::string const& getSubject() const;
+  virtual std::string getAllInfo() const;
 };
 
 #endif

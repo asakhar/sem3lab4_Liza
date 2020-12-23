@@ -27,6 +27,7 @@ public:
               std::string const& publisher, size_t numberOfCopies,
               EditionType editionType = Undefined);
   friend std::ostream& operator<<(std::ostream&, BookEdition const&);
+  virtual std::string getAllInfo() const;
   EditionType getEditionType() const;
   size_t getNumberOfCopies() const;
   size_t setNumberOfCopies(size_t nc);

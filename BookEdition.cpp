@@ -2,6 +2,7 @@
 #include <cstring>
 #include <iomanip>
 #include <memory>
+#include <sstream>
 
 std::ostream& operator<<(std::ostream& stream, EditionType type)
 {
@@ -31,7 +32,13 @@ std::ostream& operator<<(std::ostream& stream, BookEdition const& book)
                 << book.m_title << ";" << std::setw(15) << book.m_year << ";"
                 << std::setw(15) << book.m_publisher << ";" << std::setw(15)
                 << book.m_numberOfCopies << ";" << std::setw(15)
-                << book.m_editionType << "\n";
+                << book.m_editionType << ';';
+}
+
+std::string BookEdition::getAllInfo() const {
+  std::stringstream ss;
+  ss << *this;
+  return ss.str();
 }
 
 EditionType BookEdition::getEditionType() const { return m_editionType; };

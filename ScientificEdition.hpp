@@ -26,6 +26,8 @@ public:
   std::string& at(size_t index);
   std::string eraseCource(size_t index);
   ScientificEdition& operator<<(std::string const& cource);
+
+virtual std::string getAllInfo() const;
 };
 
 #endif

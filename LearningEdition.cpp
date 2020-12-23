@@ -1,4 +1,5 @@
 #include "LearningEdition.hpp"
+#include <iomanip>
 #include <sstream>
 
 LearningEdition::LearningEdition(std::string const& author,
@@ -87,4 +88,12 @@ long LearningEdition::erase(size_t index)
       m_groupsIndexes[i - flag] = m_groupsIndexes[i];
   m_numberOfGroups -= flag;
   return res;
+}
+
+std::string LearningEdition::getAllInfo() const
+{
+  std::stringstream ss;
+  ss << *this << std::setw(15) << getGroupsAsString() << ';' << std::setw(15)
+     << getCourceTitle() << ';';
+  return ss.str();
 }
