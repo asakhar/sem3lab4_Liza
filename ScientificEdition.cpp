@@ -34,6 +34,15 @@ ScientificEdition::ScientificEdition(std::string const& author,
     m_courceTitles[i] = courceTitles[i];
 }
 
+ScientificEdition::ScientificEdition(ScientificEdition const& se)
+    : BookEdition{se.m_author,    se.m_title,          se.m_year,
+                  se.m_publisher, se.m_numberOfCopies, EditionTypes::Scientific}
+{
+  for (m_numberOfCources = 0; m_numberOfCources < se.getNumberOfCources();
+       m_numberOfCources++)
+    m_courceTitles[m_numberOfCources] = se.m_courceTitles[m_numberOfCources];
+}
+
 size_t ScientificEdition::getNumberOfCources() const
 {
   return m_numberOfCources;

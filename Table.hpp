@@ -14,7 +14,7 @@ concept NotPtrDerivedBook =
     std::is_base_of<BookEdition, _Ty>::value;
 
 template <size_t __i>
-concept NotNull =
+concept NonZero =
     std::is_same<std::true_type, std::integral_constant<bool, __i>>::value;
 
 class Table
@@ -45,7 +45,7 @@ public:
   Table();
 
 private:
-  template <NotNull __i, typename... _Args>
+  template <NonZero __i, typename... _Args>
   static void copyToVector(std::tuple<KeyVal_t<_Args>...>& books,
                            std::vector<KeyVal_t<BookEdition>>& vec)
   {
@@ -117,29 +117,29 @@ public:
     pointer pos_;
 
   public:
-    iterator() : pos_(nullptr) {}
-    iterator(pointer v) : pos_(v) {}
+    inline iterator() : pos_(nullptr) {}
+    inline iterator(pointer v) : pos_(v) {}
     // ~iterator() {}
 
-    iterator operator++(int) /* postfix */
+    inline iterator operator++(int) /* postfix */
     {
       iterator ret{pos_};
       ++(*this);
       return ret;
     }
-    iterator& operator++() /* prefix */
+    inline iterator& operator++() /* prefix */
     {
       if (pos_)
         pos_ = pos_->next;
       return *this;
     }
-    KeyVal_t<BookEdition> operator*() const
+    inline KeyVal_t<BookEdition> operator*() const
     {
       return KeyVal_t<BookEdition>{pos_->code, pos_->book};
     }
-    BookEdition* operator->() const { return pos_->book; }
-    bool operator==(const iterator& rhs) const { return pos_ == rhs.pos_; }
-    bool operator!=(const iterator& rhs) const { return pos_ != rhs.pos_; }
+    inline BookEdition* operator->() const { return pos_->book; }
+    inline bool operator==(const iterator& rhs) const { return pos_ == rhs.pos_; }
+    inline bool operator!=(const iterator& rhs) const { return pos_ != rhs.pos_; }
   };
 
   iterator begin() const { return m_beforeFirst->next; }
