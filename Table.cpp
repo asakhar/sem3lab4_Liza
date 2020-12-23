@@ -6,12 +6,14 @@
 
 using namespace EditionTypes;
 
+Table::TableItem::TableItem() : code{0}, book{0}, next{0} {}
+
 Table::TableItem::TableItem(long acode, BookEdition* abook)
-    : code{acode}, book{abook}, next{nullptr}
+    : code{acode}, next{nullptr}, book{abook}
 {
 }
 
-Table::TableItem::~TableItem() { delete next; }
+Table::TableItem::~TableItem() { delete next; delete book; }
 
 Table::Table() : m_beforeFirst{new Table::TableItem}, m_numberOfEditions{0} {}
 
@@ -120,7 +122,7 @@ void Table::open(std::string const& filename)
       }
       (*this) << KeyVal_t<LearningEdition>{
           code, new LearningEdition{keeper[0], keeper[1], year, keeper[2], num,
-                                 keeper[4], groups, count}};
+                                    keeper[4], groups, count}};
     }
     else if (keeper[3] == _typestrings[2])
     {
@@ -132,15 +134,15 @@ void Table::open(std::string const& filename)
         std::getline(file, keeper[i + 4], ';');
       }
       (*this) << KeyVal_t<ScientificEdition>{
-          code, new ScientificEdition{keeper[0], keeper[1], year, keeper[2], num,
-                                   keeper + 4, count}};
+          code, new ScientificEdition{keeper[0], keeper[1], year, keeper[2],
+                                      num, keeper + 4, count}};
     }
     else if (keeper[3] == _typestrings[3])
     {
       std::getline(file, keeper[4], ';');
       (*this) << KeyVal_t<FictionEdition>{
           code, new FictionEdition{keeper[0], keeper[1], year, keeper[2], num,
-                                keeper[4]}};
+                                   keeper[4]}};
     }
     file.get();
   }

@@ -19,6 +19,15 @@ public:
                     long year, std::string const& publisher,
                     size_t numberOfCopies, std::string const courceTitles[],
                     size_t numberOfCources);
+  ScientificEdition(ScientificEdition const& se)
+      : BookEdition{se.m_author,         se.m_title,
+                    se.m_year,           se.m_publisher,
+                    se.m_numberOfCopies, EditionTypes::Scientific}
+  {
+    for (m_numberOfCources = 0; m_numberOfCources < se.getNumberOfCources();
+         m_numberOfCources++)
+      m_courceTitles[m_numberOfCources] = se.m_courceTitles[m_numberOfCources];
+  }
   size_t getNumberOfCources() const;
   std::string const* getCourceTitles() const;
   std::string getCourceTitlesAsString() const;
@@ -27,7 +36,7 @@ public:
   std::string eraseCource(size_t index);
   ScientificEdition& operator<<(std::string const& cource);
 
-virtual std::string getAllInfo() const;
+  virtual std::string getAllInfo() const;
 };
 
 #endif

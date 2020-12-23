@@ -23,10 +23,13 @@ int main(int argc, char const* argv[])
     << "cource 2"
     << "cource 3";
   // std::cout << d.getCourceTitlesAsString();
-  std::vector<std::pair<long, BookEdition*>> vec{{2, &a}, {-3, &c}, {5, &d}};
+  // std::tuple vec{{2, &a}, {-3, &c}, {5, &d}};
+  auto vec = std::make_tuple(Table::KeyVal_t<BookEdition>{2l, &a},
+                             Table::KeyVal_t<FictionEdition>{-3l, &c},
+                             Table::KeyVal_t<ScientificEdition>{5l, &d});
   Table tab{vec};
-  for (auto i : vec)
-    std::cout << i.first << " "; // copy check
+  // for (auto i : vec)
+  //   std::cout << i.first << " "; // copy check
   std::cout << "\n\n\n";
   tab << Table::KeyVal_t<ScientificEdition>{-5, &d};
   tab << Table::KeyVal_t<FictionEdition>{1, &c};

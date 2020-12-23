@@ -20,6 +20,14 @@ public:
                   long year, std::string const& publisher,
                   size_t numberOfCopies, std::string const& courceTitle,
                   long groupsIndexes[], size_t numberOfGroups);
+  LearningEdition(LearningEdition const& le)
+      : BookEdition{le.m_author, le.m_title, le.m_year, le.m_publisher,
+                    le.m_numberOfCopies, EditionTypes::Learning}
+  {
+    m_courceTitle = le.m_courceTitle;
+    for(m_numberOfGroups = 0; m_numberOfGroups < le.getNumberOfGroups(); m_numberOfGroups++)
+      m_groupsIndexes[m_numberOfGroups] = le.m_groupsIndexes[m_numberOfGroups];
+  }
   std::string const& getCourceTitle() const;
   std::string const& setCourceTitle(std::string const& title);
   long const* getGroups() const;
