@@ -29,9 +29,12 @@ int main(int argc, char const* argv[])
   tab << Table::KeyVal_t{-5, &d};
   tab << Table::KeyVal_t{1, &c};
   tab << Table::KeyVal_t{6, &a};
-  std::cout << *tab[6];
-  tab.erase(7); 
+  // std::cout << "\n\n\n\n\n" << tab[6] << "\n\n\n\n";
+  std::cout << "\n\n\n\n\n" << (BookEdition)tab[6] << "\n\n\n\n";
+  tab[6] = d;
+  tab.erase(-5); 
+  std::cout << ((ScientificEdition*)&tab[6])->getCourceTitlesAsString();
 
-  std::cout << std::endl << std::endl << tab;
+  std::cout << std::endl << std::endl << tab << std::endl;
   return 0;
 }

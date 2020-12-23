@@ -44,7 +44,7 @@ Table& Table::operator<<(KeyVal_t const& keyval)
   m_numberOfEditions++;
   return *this;
 }
-BookEdition*& Table::operator[](long key)
+Table::BookEditionWrapper Table::operator[](long key)
 {
   auto prev = m_beforeFirst;
   for (auto i = 0ul; i < size(); i++)
