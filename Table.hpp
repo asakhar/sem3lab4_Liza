@@ -2,6 +2,7 @@
 #define TABLE_HPP
 #include "BookEdition.hpp"
 #include <algorithm>
+#include <iterator>
 #include <vector>
 class Table
 {
@@ -57,6 +58,43 @@ public:
   friend std::ostream& operator<<(std::ostream& stream, Table const& table);
   void save(std::string const& filename) const;
   void open(std::string const& filename);
+  class iterator : public std::iterator<std::forward_iterator_tag, TableItem>
+  {
+    using reference = BookEdition*&;
+    pointer pos_;
+
+  public:
+    iterator() : pos_(nullptr) {}
+    iterator(pointer v) : pos_(v) {}
+    // ~iterator() {}
+
+    iterator operator++(int) /* postfix */
+    {
+      iterator ret{pos_};
+      ++(*this);
+      return ret;
+    }
+    iterator& operator++() /* prefix */
+    {
+      if (pos_)
+        pos_ = pos_->next;
+      return *this;
+    }
+    reference operator*() const { return pos_->book; }
+    BookEdition* operator->() const { return pos_->book; }
+    bool operator==(const iterator& rhs) const { return pos_ == rhs.pos_; }
+    bool operator!=(const iterator& rhs) const { return pos_ != rhs.pos_; }
+  };
+
+  iterator begin() const
+  {
+    return m_beforeFirst->next;
+  }
+
+  iterator end() const
+  {
+    return {};
+  }
 };
 
 #endif // TABLE_HPP

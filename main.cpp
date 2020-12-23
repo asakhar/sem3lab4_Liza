@@ -36,10 +36,11 @@ int main(int argc, char const* argv[])
   // tab.erase(7);
 
   // std::cout << std::endl << std::endl << tab;
-  std::ofstream file("123.csv");
-  std::vector<long> keys{-5, -3, 1, 2, 5, 6};
-  for (auto& i : keys)
-    file << tab[i]->getAllInfo() << '\n';
-  file.close();
+  tab.save("1234.csv");
+  // std::ofstream file("123.csv");
+  // std::vector<long> keys{-5, -3, 1, 2, 5, 6};
+  // for (auto& i : keys)
+  //   file << tab[i]->getAllInfo() << '\n';
+  // file.close();
   return 0;
 }

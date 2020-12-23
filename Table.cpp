@@ -67,7 +67,9 @@ std::ostream& operator<<(std::ostream& stream, Table const& table)
 
 void Table::save(std::string const& filename) const{
   std::ofstream file{filename};
-  
+  for(auto row : *this) 
+    file << row->getAllInfo() << '\n';
+  file.close();
 }
 void Table::open(std::string const& filename) {
 
