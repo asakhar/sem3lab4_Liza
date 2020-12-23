@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 
+namespace EditionTypes
+{
 enum EditionType
 {
   Undefined,
@@ -10,7 +12,9 @@ enum EditionType
   Scientific,
   Fiction
 };
-
+static char const* const _typestrings[] = {"Undefined", "Learning",
+                                           "Scientific", "Fiction"};
+} // namespace EditionTypes
 class BookEdition
 {
 protected:
@@ -19,16 +23,18 @@ protected:
   long m_year;
   std::string m_publisher;
   size_t m_numberOfCopies;
-  EditionType m_editionType;
+  EditionTypes::EditionType m_editionType;
+  BookEdition(std::string const& author, std::string const& title, long year,
+              std::string const& publisher, size_t numberOfCopies,
+              EditionTypes::EditionType editionType);
 
 public:
   BookEdition();
   BookEdition(std::string const& author, std::string const& title, long year,
-              std::string const& publisher, size_t numberOfCopies,
-              EditionType editionType = Undefined);
+              std::string const& publisher, size_t numberOfCopies);
   friend std::ostream& operator<<(std::ostream&, BookEdition const&);
   virtual std::string getAllInfo() const;
-  EditionType getEditionType() const;
+  EditionTypes::EditionType getEditionType() const;
   size_t getNumberOfCopies() const;
   size_t setNumberOfCopies(size_t nc);
   BookEdition& operator++();

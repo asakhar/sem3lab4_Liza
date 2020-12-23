@@ -12,7 +12,7 @@ int main(int argc, char const* argv[])
   std::string b = "sdfg";
   // std::cin >> b;
 
-  BookEdition a{b, ""s, 1l, ""s, 2ul, Learning};
+  BookEdition a{b, ""s, 1l, ""s, 2ul};
   b = "1234";
   FictionEdition c{"1214", "title", 1299, "pub", 12, "New Year"};
   ScientificEdition d{"someauth", "sometitle", -100, "somepbl", 9999};
@@ -31,12 +31,17 @@ int main(int argc, char const* argv[])
   tab << Table::KeyVal_t<ScientificEdition>{-5, &d};
   tab << Table::KeyVal_t<FictionEdition>{1, &c};
   tab << Table::KeyVal_t<BookEdition>{6, &a};
+  tab << Table::KeyVal_t<LearningEdition>{
+      7, new LearningEdition{
+             "learning", "le", 2020, "me", INT64_MAX, "IS", {1, 2, 6}}};
   // std::cout << *tab[6];
   // std::cout << ((ScientificEdition*)(tab[-5]))->getCourceTitlesAsString();
   // tab.erase(7);
 
   // std::cout << std::endl << std::endl << tab;
   tab.save("1234.csv");
+  tab.open("1234.csv");
+  std::cout << "\n\n" << tab;
   // std::ofstream file("123.csv");
   // std::vector<long> keys{-5, -3, 1, 2, 5, 6};
   // for (auto& i : keys)

@@ -1,6 +1,10 @@
 #include "ScientificEdition.hpp"
+#ifdef DEBUG
 #include <iomanip>
+#endif
 #include <sstream>
+
+using namespace EditionTypes;
 
 ScientificEdition::ScientificEdition(
     std::string const& author, std::string const& title, long year,
@@ -43,7 +47,7 @@ std::string ScientificEdition::getCourceTitlesAsString() const
 {
   std::stringstream ss;
   for (auto i = 0ul; i < getNumberOfCources(); i++)
-    ss << m_courceTitles[i] << ((i == getNumberOfCources() - 1) ? "" : ", ");
+    ss << m_courceTitles[i] << ((i == getNumberOfCources() - 1) ? "" : ";");
   return ss.str();
 }
 std::string& ScientificEdition::operator[](size_t index) noexcept
@@ -85,6 +89,10 @@ ScientificEdition& ScientificEdition::operator<<(std::string const& cource)
 std::string ScientificEdition::getAllInfo() const
 {
   std::stringstream ss;
-  ss << *this << std::setw(15) << getCourceTitlesAsString() << ';';
+  ss << *this
+#ifdef DEBUG
+     << std::setw(15)
+#endif
+     << getNumberOfCources() << ';' << getCourceTitlesAsString() << ';';
   return ss.str();
 }

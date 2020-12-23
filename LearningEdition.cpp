@@ -1,6 +1,10 @@
 #include "LearningEdition.hpp"
+#ifdef DEBUG
 #include <iomanip>
+#endif
 #include <sstream>
+
+using namespace EditionTypes;
 
 LearningEdition::LearningEdition(std::string const& author,
                                  std::string const& title, long year,
@@ -49,7 +53,7 @@ std::string LearningEdition::getGroupsAsString() const
 {
   std::stringstream ss;
   for (auto i = 0ul; i < getNumberOfGroups(); i++)
-    ss << m_groupsIndexes[i] << ((i == getNumberOfGroups() - 1) ? "" : ", ");
+    ss << m_groupsIndexes[i] << ((i == getNumberOfGroups() - 1) ? "" : ";");
   return ss.str();
 }
 long& LearningEdition::operator[](size_t index) noexcept
@@ -93,7 +97,14 @@ long LearningEdition::erase(size_t index)
 std::string LearningEdition::getAllInfo() const
 {
   std::stringstream ss;
-  ss << *this << std::setw(15) << getGroupsAsString() << ';' << std::setw(15)
-     << getCourceTitle() << ';';
+  ss << *this
+#ifdef DEBUG
+     << std::setw(15)
+#endif
+     << getCourceTitle() << ';'
+#ifdef DEBUG
+     << std::setw(15)
+#endif
+     << getNumberOfGroups() << ';' << getGroupsAsString() << ';';
   return ss.str();
 }

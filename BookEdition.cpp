@@ -1,13 +1,14 @@
 #include "BookEdition.hpp"
 #include <cstring>
+#ifdef DEBUG
 #include <iomanip>
-#include <memory>
+#endif
+// #include <memory>
 #include <sstream>
+using namespace EditionTypes;
 
 std::ostream& operator<<(std::ostream& stream, EditionType type)
 {
-  static char const* const _typestrings[] = {"Undefined", "Learning",
-                                             "Scientific", "Fiction"};
   return stream << _typestrings[type];
 }
 
@@ -18,8 +19,17 @@ BookEdition::BookEdition()
 
 BookEdition::BookEdition(std::string const& author, std::string const& title,
                          long year, std::string const& publisher,
-                         size_t numberOfCopies, EditionType editionType)
-    : m_year{year}, m_numberOfCopies{numberOfCopies}, m_editionType{editionType}
+                         size_t numberOfCopies)
+    : m_year{year}, m_numberOfCopies{numberOfCopies}, m_editionType{Undefined}
+{
+  m_author    = author;
+  m_title     = title;
+  m_publisher = publisher;
+}
+BookEdition::BookEdition(std::string const& author, std::string const& title,
+                         long year, std::string const& publisher,
+                         size_t numberOfCopies, EditionType etype)
+    : m_year{year}, m_numberOfCopies{numberOfCopies}, m_editionType{etype}
 {
   m_author    = author;
   m_title     = title;
@@ -28,14 +38,39 @@ BookEdition::BookEdition(std::string const& author, std::string const& title,
 
 std::ostream& operator<<(std::ostream& stream, BookEdition const& book)
 {
-  return stream << std::setw(15) << book.m_author << ";" << std::setw(15)
-                << book.m_title << ";" << std::setw(15) << book.m_year << ";"
-                << std::setw(15) << book.m_publisher << ";" << std::setw(15)
-                << book.m_numberOfCopies << ";" << std::setw(15)
-                << book.m_editionType << ';';
+  return stream
+#ifdef DEBUG
+         << std::setw(15)
+#endif
+         << book.m_author << ";"
+#ifdef DEBUG
+         << std::setw(15)
+#endif
+
+         << book.m_title << ";"
+#ifdef DEBUG
+         << std::setw(15)
+#endif
+         << book.m_year << ";"
+
+#ifdef DEBUG
+         << std::setw(15)
+#endif
+         << book.m_publisher << ";"
+#ifdef DEBUG
+         << std::setw(15)
+#endif
+
+         << book.m_numberOfCopies << ";"
+#ifdef DEBUG
+         << std::setw(15)
+#endif
+
+         << book.m_editionType << ';';
 }
 
-std::string BookEdition::getAllInfo() const {
+std::string BookEdition::getAllInfo() const
+{
   std::stringstream ss;
   ss << *this;
   return ss.str();

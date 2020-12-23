@@ -1,6 +1,9 @@
 #ifndef TABLE_HPP
 #define TABLE_HPP
 #include "BookEdition.hpp"
+#include "LearningEdition.hpp"
+#include "ScientificEdition.hpp"
+#include "FictionEdition.hpp"
 #include <algorithm>
 #include <iterator>
 #include <vector>
@@ -60,7 +63,7 @@ public:
   void open(std::string const& filename);
   class iterator : public std::iterator<std::forward_iterator_tag, TableItem>
   {
-    using reference = BookEdition*&;
+    // using reference = BookEdition*&;
     pointer pos_;
 
   public:
@@ -80,7 +83,7 @@ public:
         pos_ = pos_->next;
       return *this;
     }
-    reference operator*() const { return pos_->book; }
+    KeyVal_t<BookEdition> operator*() const { return KeyVal_t<BookEdition>{pos_->code, pos_->book}; }
     BookEdition* operator->() const { return pos_->book; }
     bool operator==(const iterator& rhs) const { return pos_ == rhs.pos_; }
     bool operator!=(const iterator& rhs) const { return pos_ != rhs.pos_; }

@@ -5,7 +5,7 @@
 class FictionEdition : public BookEdition
 {
 private:
-  EditionType m_editionType = Fiction;
+  EditionTypes::EditionType m_editionType = EditionTypes::Fiction;
   std::string m_subject;
 
 public:

@@ -1,6 +1,10 @@
 #include "Table.hpp"
-#include <iomanip>
 #include <fstream>
+#ifdef DEBUG
+#include <iomanip>
+#endif
+
+using namespace EditionTypes;
 
 Table::TableItem::TableItem(long acode, BookEdition* abook)
     : code{acode}, book{abook}, next{nullptr}
@@ -58,19 +62,86 @@ std::ostream& operator<<(std::ostream& stream, Table const& table)
   auto prev = table.m_beforeFirst;
   for (auto i = 0ul; i < table.size(); i++)
   {
-    stream << std::setw(20) << prev->next->code << ":" << *prev->next->book
-           << '\n';
+    stream
+#ifdef DEBUG
+        << std::setw(20)
+#endif
+        << prev->next->code << ":" << *prev->next->book << '\n';
     prev = prev->next;
   }
   return stream;
 }
 
-void Table::save(std::string const& filename) const{
+void Table::save(std::string const& filename) const
+{
   std::ofstream file{filename};
-  for(auto row : *this) 
-    file << row->getAllInfo() << '\n';
+  for (auto row : *this)
+    file << row.first << ';' << row.second->getAllInfo() << '\n';
   file.close();
 }
-void Table::open(std::string const& filename) {
+void Table::open(std::string const& filename)
+{
+  delete m_beforeFirst->next;
+  m_beforeFirst->next = nullptr;
+  m_numberOfEditions  = 0;
+  std::ifstream file{filename};
+  while (!file.eof())
+  {
+    std::string keeper[7];
+    long year, code;
+    size_t num;
+    file >> code;
+    file.get();
+    std::getline(file, keeper[0], ';');
+    std::getline(file, keeper[1], ';');
+    file >> year;
+    file.get();
+    std::getline(file, keeper[2], ';');
+    file >> num;
+    file.get();
+    std::getline(file, keeper[3], ';');
+    if (keeper[3] == _typestrings[0])
+    {
 
+      (*this) << KeyVal_t<BookEdition>{
+          code, new BookEdition{keeper[0], keeper[1], year, keeper[2], num}};
+    }
+    else if (keeper[3] == _typestrings[1])
+    {
+      std::getline(file, keeper[4], ';');
+      long groups[8];
+      size_t count;
+      file >> count;
+      file.get();
+      for (auto i = 0; i < count; i++)
+      {
+        file >> groups[i];
+        file.get();
+      }
+      (*this) << KeyVal_t<LearningEdition>{
+          code, new LearningEdition{keeper[0], keeper[1], year, keeper[2], num,
+                                 keeper[4], groups, count}};
+    }
+    else if (keeper[3] == _typestrings[2])
+    {
+      size_t count;
+      file >> count;
+      file.get();
+      for (auto i = 0; i < count; i++)
+      {
+        std::getline(file, keeper[i + 4], ';');
+      }
+      (*this) << KeyVal_t<ScientificEdition>{
+          code, new ScientificEdition{keeper[0], keeper[1], year, keeper[2], num,
+                                   keeper + 4, count}};
+    }
+    else if (keeper[3] == _typestrings[3])
+    {
+      std::getline(file, keeper[4], ';');
+      (*this) << KeyVal_t<FictionEdition>{
+          code, new FictionEdition{keeper[0], keeper[1], year, keeper[2], num,
+                                keeper[4]}};
+    }
+    file.get();
+  }
 }
